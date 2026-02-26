@@ -17,14 +17,15 @@ def cargar_imagen_local(ruta):
         try:
             with open(ruta, "rb") as image_file:
                 encoded_string = base64.b64encode(image_file.read()).decode()
-            # Determinamos el tipo de imagen (png o jpeg)
+            # Determinamos el tipo de imagen
             ext = ruta.split('.')[-1].lower()
             mime_type = "image/png" if ext == "png" else "image/jpeg"
             return f"data:{mime_type};base64,{encoded_string}"
         except Exception as e:
-            return "https://via.placeholder.com/300x200.png?text=Error+Imagen"
+            # Si falla la lectura, devuelve un placeholder
+            return "https://via.placeholder.com/300x200.png?text=Error+al+leer+imagen"
     else:
-        # Devuelve un cuadro transparente si no encuentra la foto
+        # Devuelve un cuadro transparente si no encuentra el archivo
         return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNcWg8qAAAB8gExB+L0HQAAAABJRU5ErkJggg=="
 
 # --- ESTILOS CSS PERSONALIZADOS ---
@@ -113,7 +114,7 @@ st.write("---")
 # --- ESTRUCTURA DE PESTAÑAS ---
 tab1, tab2, tab3 = st.tabs(["🌹 El Inicio", "📸 Nuestros Recuerdos", "💖 ¿Por qué Tú?"])
 
-# --- PESTAÑA 1: EL INICIO (ARREGLADO) ---
+# --- PESTAÑA 1: EL INICIO (AQUÍ VA EL SNOOPY) ---
 with tab1:
     st.markdown("""
         <div class="card-box">
@@ -124,18 +125,21 @@ with tab1:
         </div>
     """, unsafe_allow_html=True)
     
-    # --- AQUÍ ESTÁ EL ARREGLO DE SNOOPY ---
-    # Usamos la función segura para cargar la imagen
-    snoopy_data = cargar_imagen_local("snoopy.png")
+    # --- CARGAMOS A SNOOPY DE FORMA SEGURA ---
+    # Asegúrate de que el archivo se llame "snoopy.png"
+    ruta_snoopy = "snoopy.png"
+    snoopy_data = cargar_imagen_local(ruta_snoopy)
     
-    col_img1, col_img2, col_img3 = st.columns([1, 2, 1])
-    with col_img2:
-         # Si la imagen existe, la cargará de forma segura via HTML
-         if "image/png" in snoopy_data or "image/jpeg" in snoopy_data:
-             st.markdown(f'<img src="{snoopy_data}" style="width:100%; max-width: 400px; display: block; margin: auto;">', unsafe_allow_html=True)
-         else:
-             # Si no la encuentra, muestra un aviso claro
-             st.error("⚠️ IMPORTANTE: Falta el archivo 'snoopy.png' en la carpeta.")
+    if "image/png" in snoopy_data:
+        # Si la imagen se cargó bien, la mostramos centrada con HTML
+        st.markdown(f"""
+            <div style="display: flex; justify-content: center; margin-top: 20px; margin-bottom: 20px;">
+                <img src="{snoopy_data}" style="width: 300px; height: auto;">
+            </div>
+        """, unsafe_allow_html=True)
+    else:
+        # Si no encuentra "snoopy.png", muestra una alerta roja para que sepas que falta el archivo
+        st.error("⚠️ FALTA LA IMAGEN: No encuentro el archivo 'snoopy.png' en la carpeta del código.")
 
 
 # --- PESTAÑA 2: FOTOS TIPO POLAROID ---
