@@ -84,6 +84,7 @@ st.markdown("""
         font-size: 20px;
         font-weight: bold;
         border: 2px solid white;
+        margin-top: 10px;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -121,7 +122,7 @@ with tab1:
         st.image("https://media.tenor.com/81mX1Z0Yw4MAAAAi/bubu-dudu-kisses.gif", use_container_width=True)
 
 
-# --- PESTAÑA 2: FOTOS TIPO POLAROID (Corregido para que sean larguitas) ---
+# --- PESTAÑA 2: FOTOS TIPO POLAROID ---
 with tab2:
     st.markdown('<div class="card-box"><p>Pequeños instantes de una gran historia de amor.</p></div>', unsafe_allow_html=True)
     
@@ -139,7 +140,6 @@ with tab2:
 
     col_p1, col_p2, col_p3 = st.columns(3)
     
-    # CAMBIO AQUÍ: Se agregó 'aspect-ratio: 2/3' para que sean altas
     with col_p1:
         st.markdown(f"""
             <div class="polaroid">
@@ -181,16 +181,15 @@ with tab3:
     """, unsafe_allow_html=True)
 
 
-# --- SECCIÓN DE RELLENO (Nuevo para quitar el vacío) ---
+# --- SECCIÓN DE RELLENO BONITA (Reemplaza el espacio en blanco) ---
 st.markdown("""
-    <div style="text-align: center; margin: 50px 0; color: #FFFFFF; text-shadow: 1px 1px 2px #d4a5a5;">
-        <p style="font-size: 24px;">✨ ~ <i>Eres mi hoy y todos mis mañanas</i> ~ ✨</p>
-        <p style="font-size: 30px;">❤️🧡💛💚💙💜</p>
+    <div style="background-color: rgba(255, 255, 255, 0.6); padding: 20px; border-radius: 20px; text-align: center; margin: 30px 0px 20px 0px; box-shadow: 0 4px 15px rgba(255,105,180,0.2);">
+        <img src="https://media.tenor.com/ef30B6bU-HMAAAAi/bubu-dudu.gif" width="120" style="margin-bottom: 10px; border-radius: 10px;">
+        <h2 style="color: #FF4B4B; font-family: 'Brush Script MT', cursive; font-size: 38px; margin: 0; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">Cada instante a tu lado es magia pura ✨</h2>
+        <p style="color: #444; font-size: 18px; margin-top: 5px; font-weight: bold;">Y este es solo el comienzo de nuestra historia...</p>
     </div>
 """, unsafe_allow_html=True)
 
-
-st.write("---")
 
 # --- EL GRAN FINAL ---
 c1, c2, c3 = st.columns([1, 2, 1])
