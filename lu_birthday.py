@@ -11,14 +11,20 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# --- FUNCIÓN PARA CARGAR IMÁGENES LOCALES EN HTML ---
+# --- FUNCIÓN PARA CARGAR IMÁGENES LOCALES EN HTML (EL SALVAVIDAS) ---
 def cargar_imagen_local(ruta):
     if os.path.exists(ruta):
-        with open(ruta, "rb") as image_file:
-            encoded_string = base64.b64encode(image_file.read()).decode()
-        return f"data:image/jpeg;base64,{encoded_string}"
+        try:
+            with open(ruta, "rb") as image_file:
+                encoded_string = base64.b64encode(image_file.read()).decode()
+            # Determinamos el tipo de imagen (png o jpeg)
+            ext = ruta.split('.')[-1].lower()
+            mime_type = "image/png" if ext == "png" else "image/jpeg"
+            return f"data:{mime_type};base64,{encoded_string}"
+        except Exception as e:
+            return "https://via.placeholder.com/300x200.png?text=Error+Imagen"
     else:
-        # Devuelve un cuadro gris genérico si no encuentra la foto
+        # Devuelve un cuadro transparente si no encuentra la foto
         return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNcWg8qAAAB8gExB+L0HQAAAABJRU5ErkJggg=="
 
 # --- ESTILOS CSS PERSONALIZADOS ---
@@ -107,7 +113,7 @@ st.write("---")
 # --- ESTRUCTURA DE PESTAÑAS ---
 tab1, tab2, tab3 = st.tabs(["🌹 El Inicio", "📸 Nuestros Recuerdos", "💖 ¿Por qué Tú?"])
 
-# --- PESTAÑA 1: EL INICIO ---
+# --- PESTAÑA 1: EL INICIO (ARREGLADO) ---
 with tab1:
     st.markdown("""
         <div class="card-box">
@@ -117,9 +123,19 @@ with tab1:
             que es tenerte en mi vida. Eres la casualidad más bonita que me ha pasado.</p>
         </div>
     """, unsafe_allow_html=True)
-    col_gif1, col_gif2, col_gif3 = st.columns([1,2,1])
-    with col_gif2:
-        st.image("https://media.tenor.com/81mX1Z0Yw4MAAAAi/bubu-dudu-kisses.gif", use_container_width=True)
+    
+    # --- AQUÍ ESTÁ EL ARREGLO DE SNOOPY ---
+    # Usamos la función segura para cargar la imagen
+    snoopy_data = cargar_imagen_local("snoopy.png")
+    
+    col_img1, col_img2, col_img3 = st.columns([1, 2, 1])
+    with col_img2:
+         # Si la imagen existe, la cargará de forma segura via HTML
+         if "image/png" in snoopy_data or "image/jpeg" in snoopy_data:
+             st.markdown(f'<img src="{snoopy_data}" style="width:100%; max-width: 400px; display: block; margin: auto;">', unsafe_allow_html=True)
+         else:
+             # Si no la encuentra, muestra un aviso claro
+             st.error("⚠️ IMPORTANTE: Falta el archivo 'snoopy.png' en la carpeta.")
 
 
 # --- PESTAÑA 2: FOTOS TIPO POLAROID ---
@@ -132,7 +148,7 @@ with tab2:
     if not os.path.exists("foto3.jpg"): fotos_faltantes.append("foto3.jpg")
     
     if len(fotos_faltantes) > 0:
-        st.warning(f"⚠️ Hola Justin, el código no puede encontrar estos archivos: **{', '.join(fotos_faltantes)}**. Asegúrate de que estén en la misma carpeta que este script y que la extensión sea exactamente .jpg.")
+        st.warning(f"⚠️ Faltan las fotos: **{', '.join(fotos_faltantes)}**. Asegúrate de que sean .jpg exactamente.")
 
     foto_1 = cargar_imagen_local("foto1.jpg")
     foto_2 = cargar_imagen_local("foto2.jpg")
@@ -181,7 +197,7 @@ with tab3:
     """, unsafe_allow_html=True)
 
 
-# --- SECCIÓN DE RELLENO BONITA (Reemplaza el espacio en blanco) ---
+# --- SECCIÓN DE RELLENO BONITA ---
 st.markdown("""
     <div style="background-color: rgba(255, 255, 255, 0.6); padding: 20px; border-radius: 20px; text-align: center; margin: 30px 0px 20px 0px; box-shadow: 0 4px 15px rgba(255,105,180,0.2);">
         <img src="https://media.tenor.com/ef30B6bU-HMAAAAi/bubu-dudu.gif" width="120" style="margin-bottom: 10px; border-radius: 10px;">
