@@ -17,8 +17,9 @@ def cargar_imagen_local(ruta):
         with open(ruta, "rb") as image_file:
             encoded_string = base64.b64encode(image_file.read()).decode()
         return f"data:image/jpeg;base64,{encoded_string}"
-    # Si no encuentra tu foto, pondrá un cuadro gris con un mensaje
-    return "https://via.placeholder.com/300x400.png?text=Falta+" + ruta
+    else:
+        # Devuelve un cuadro gris genérico si no encuentra la foto para que no se vea el icono roto
+        return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNcWg8qAAAB8gExB+L0HQAAAABJRU5ErkJggg=="
 
 # --- ESTILOS CSS PERSONALIZADOS ---
 st.markdown("""
@@ -29,7 +30,6 @@ st.markdown("""
         background-attachment: fixed;
     }
     
-    /* Estilo para los títulos principales */
     .main-title {
         font-family: 'Brush Script MT', cursive; 
         font-size: 60px !important;
@@ -40,7 +40,6 @@ st.markdown("""
         padding-bottom: 20px;
     }
     
-    /* Estilo para subtítulos */
     .sub-title {
         font-size: 30px !important;
         color: #FFFFFF;
@@ -48,7 +47,6 @@ st.markdown("""
         text-shadow: 1px 1px 2px #d4a5a5;
     }
     
-    /* Cajas de texto estilo "tarjeta" */
     .card-box {
         background-color: rgba(255, 255, 255, 0.85); 
         padding: 25px;
@@ -60,7 +58,6 @@ st.markdown("""
         margin-bottom: 20px;
     }
 
-    /* Estilo para las fotos tipo Polaroid */
     .polaroid {
         background-color: white;
         padding: 10px 10px 30px 10px;
@@ -79,7 +76,6 @@ st.markdown("""
         margin-top: 10px;
     }
     
-    /* Personalizar botones */
     .stButton>button {
         background-color: #FF4B4B;
         color: white;
@@ -122,14 +118,23 @@ with tab1:
     """, unsafe_allow_html=True)
     col_gif1, col_gif2, col_gif3 = st.columns([1,2,1])
     with col_gif2:
-        st.image("https://media.giphy.com/media/MDJ9IbxxU23l8sEdcK/giphy.gif", use_container_width=True)
+        # GIF ACTUALIZADO A UNO QUE SÍ FUNCIONA
+        st.image("https://media.tenor.com/81mX1Z0Yw4MAAAAi/bubu-dudu-kisses.gif", use_container_width=True)
 
 
 # --- PESTAÑA 2: FOTOS TIPO POLAROID ---
 with tab2:
     st.markdown('<div class="card-box"><p>Pequeños instantes de una gran historia de amor.</p></div>', unsafe_allow_html=True)
     
-    # Aquí es donde se procesan las fotos locales usando la nueva función
+    # SISTEMA DE ADVERTENCIA PARA AYUDARTE
+    fotos_faltantes = []
+    if not os.path.exists("foto1.jpg"): fotos_faltantes.append("foto1.jpg")
+    if not os.path.exists("foto2.jpg"): fotos_faltantes.append("foto2.jpg")
+    if not os.path.exists("foto3.jpg"): fotos_faltantes.append("foto3.jpg")
+    
+    if len(fotos_faltantes) > 0:
+        st.warning(f"⚠️ Hola Justin, el código no puede encontrar estos archivos: **{', '.join(fotos_faltantes)}**. Asegúrate de que estén en la misma carpeta que este script y que la extensión sea exactamente .jpg (a veces Windows las guarda como .jpeg o .png).")
+
     foto_1 = cargar_imagen_local("foto1.jpg")
     foto_2 = cargar_imagen_local("foto2.jpg")
     foto_3 = cargar_imagen_local("foto3.jpg")
@@ -139,7 +144,7 @@ with tab2:
     with col_p1:
         st.markdown(f"""
             <div class="polaroid">
-                <img src="{foto_1}" style="width:100%; height:auto; aspect-ratio: 3/4; object-fit: cover;">
+                <img src="{foto_1}" style="width:100%; height:300px; object-fit: cover;">
                 <div class="caption_pol">El comienzo de todo ❤️</div>
             </div>
         """, unsafe_allow_html=True)
@@ -147,7 +152,7 @@ with tab2:
     with col_p2:
         st.markdown(f"""
             <div class="polaroid">
-                <img src="{foto_2}" style="width:100%; height:auto; aspect-ratio: 3/4; object-fit: cover; transform: rotate(3deg);">
+                <img src="{foto_2}" style="width:100%; height:300px; object-fit: cover; transform: rotate(3deg);">
                 <div class="caption_pol">Momentos inolvidables ✨</div>
             </div>
         """, unsafe_allow_html=True)
@@ -155,7 +160,7 @@ with tab2:
     with col_p3:
         st.markdown(f"""
             <div class="polaroid">
-                <img src="{foto_3}" style="width:100%; height:auto; aspect-ratio: 3/4; object-fit: cover;">
+                <img src="{foto_3}" style="width:100%; height:300px; object-fit: cover;">
                 <div class="caption_pol">Mi vista favorita 😍</div>
             </div>
         """, unsafe_allow_html=True)
@@ -189,8 +194,9 @@ with c2:
         st.balloons()
         time.sleep(1)
         
+        # AQUÍ ESTÁ EL CAMBIO DE COLOR: background-color: #ffe4e1 (Rosa suave) y box-shadow rosa
         st.markdown("""
-            <div style="background-color: #FFD700; padding: 30px; border-radius: 25px; border: 4px dashed #FF4B4B; text-align: center; box-shadow: 0 0 20px #FFD700; margin-top: 20px;">
+            <div style="background-color: #ffe4e1; padding: 30px; border-radius: 25px; border: 4px dashed #FF4B4B; text-align: center; box-shadow: 0 0 30px #ffb6c1; margin-top: 20px;">
                 <img src="https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif" width="150" style="border-radius: 15px;">
                 <h1 style="color: #FF4B4B; font-size: 40px; margin-top: 15px;">¡TE AMO INFINITO, LUBALOO! ❤️</h1>
                 <p style="font-size: 22px; color: #333;">Que este nuevo año de vida te traiga salud, sueños cumplidos y que sigamos escribiendo esta historia juntos por muchísimo tiempo más.</p>
