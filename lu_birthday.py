@@ -18,7 +18,7 @@ def cargar_imagen_local(ruta):
             encoded_string = base64.b64encode(image_file.read()).decode()
         return f"data:image/jpeg;base64,{encoded_string}"
     else:
-        # Devuelve un cuadro gris genérico si no encuentra la foto para que no se vea el icono roto
+        # Devuelve un cuadro gris genérico si no encuentra la foto
         return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNcWg8qAAAB8gExB+L0HQAAAABJRU5ErkJggg=="
 
 # --- ESTILOS CSS PERSONALIZADOS ---
@@ -121,11 +121,10 @@ with tab1:
         st.image("https://media.tenor.com/81mX1Z0Yw4MAAAAi/bubu-dudu-kisses.gif", use_container_width=True)
 
 
-# --- PESTAÑA 2: FOTOS TIPO POLAROID ---
+# --- PESTAÑA 2: FOTOS TIPO POLAROID (Corregido para que sean larguitas) ---
 with tab2:
     st.markdown('<div class="card-box"><p>Pequeños instantes de una gran historia de amor.</p></div>', unsafe_allow_html=True)
     
-    # SISTEMA DE ADVERTENCIA PARA AYUDARTE
     fotos_faltantes = []
     if not os.path.exists("foto1.jpg"): fotos_faltantes.append("foto1.jpg")
     if not os.path.exists("foto2.jpg"): fotos_faltantes.append("foto2.jpg")
@@ -140,10 +139,11 @@ with tab2:
 
     col_p1, col_p2, col_p3 = st.columns(3)
     
+    # CAMBIO AQUÍ: Se agregó 'aspect-ratio: 2/3' para que sean altas
     with col_p1:
         st.markdown(f"""
             <div class="polaroid">
-                <img src="{foto_1}" style="width:100%; height:300px; object-fit: cover;">
+                <img src="{foto_1}" style="width:100%; aspect-ratio: 2/3; object-fit: cover;">
                 <div class="caption_pol">El comienzo de todo ❤️</div>
             </div>
         """, unsafe_allow_html=True)
@@ -151,7 +151,7 @@ with tab2:
     with col_p2:
         st.markdown(f"""
             <div class="polaroid">
-                <img src="{foto_2}" style="width:100%; height:300px; object-fit: cover; transform: rotate(3deg);">
+                <img src="{foto_2}" style="width:100%; aspect-ratio: 2/3; object-fit: cover; transform: rotate(3deg);">
                 <div class="caption_pol">Momentos inolvidables ✨</div>
             </div>
         """, unsafe_allow_html=True)
@@ -159,7 +159,7 @@ with tab2:
     with col_p3:
         st.markdown(f"""
             <div class="polaroid">
-                <img src="{foto_3}" style="width:100%; height:300px; object-fit: cover;">
+                <img src="{foto_3}" style="width:100%; aspect-ratio: 2/3; object-fit: cover;">
                 <div class="caption_pol">Mi vista favorita 😍</div>
             </div>
         """, unsafe_allow_html=True)
@@ -181,9 +181,16 @@ with tab3:
     """, unsafe_allow_html=True)
 
 
+# --- SECCIÓN DE RELLENO (Nuevo para quitar el vacío) ---
+st.markdown("""
+    <div style="text-align: center; margin: 50px 0; color: #FFFFFF; text-shadow: 1px 1px 2px #d4a5a5;">
+        <p style="font-size: 24px;">✨ ~ <i>Eres mi hoy y todos mis mañanas</i> ~ ✨</p>
+        <p style="font-size: 30px;">❤️🧡💛💚💙💜</p>
+    </div>
+""", unsafe_allow_html=True)
+
+
 st.write("---")
-st.write("")
-st.write("")
 
 # --- EL GRAN FINAL ---
 c1, c2, c3 = st.columns([1, 2, 1])
