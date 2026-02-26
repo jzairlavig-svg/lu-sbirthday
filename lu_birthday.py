@@ -118,7 +118,6 @@ with tab1:
     """, unsafe_allow_html=True)
     col_gif1, col_gif2, col_gif3 = st.columns([1,2,1])
     with col_gif2:
-        # GIF ACTUALIZADO A UNO QUE SÍ FUNCIONA
         st.image("https://media.tenor.com/81mX1Z0Yw4MAAAAi/bubu-dudu-kisses.gif", use_container_width=True)
 
 
@@ -133,7 +132,7 @@ with tab2:
     if not os.path.exists("foto3.jpg"): fotos_faltantes.append("foto3.jpg")
     
     if len(fotos_faltantes) > 0:
-        st.warning(f"⚠️ Hola Justin, el código no puede encontrar estos archivos: **{', '.join(fotos_faltantes)}**. Asegúrate de que estén en la misma carpeta que este script y que la extensión sea exactamente .jpg (a veces Windows las guarda como .jpeg o .png).")
+        st.warning(f"⚠️ Hola Justin, el código no puede encontrar estos archivos: **{', '.join(fotos_faltantes)}**. Asegúrate de que estén en la misma carpeta que este script y que la extensión sea exactamente .jpg.")
 
     foto_1 = cargar_imagen_local("foto1.jpg")
     foto_2 = cargar_imagen_local("foto2.jpg")
@@ -194,14 +193,13 @@ with c2:
         st.balloons()
         time.sleep(1)
         
-        # AQUÍ ESTÁ EL CAMBIO DE COLOR: background-color: #ffe4e1 (Rosa suave) y box-shadow rosa
         st.markdown("""
             <div style="background-color: #ffe4e1; padding: 30px; border-radius: 25px; border: 4px dashed #FF4B4B; text-align: center; box-shadow: 0 0 30px #ffb6c1; margin-top: 20px;">
                 <img src="https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif" width="150" style="border-radius: 15px;">
                 <h1 style="color: #FF4B4B; font-size: 40px; margin-top: 15px;">¡TE AMO INFINITO, LUBALOO! ❤️</h1>
-                <p style="font-size: 22px; color: #333;">Que este nuevo año de vida te traiga salud, sueños cumplidos y que sigamos escribiendo esta historia juntos por muchísimo tiempo más.</p>
-                <h2 style="color: #FF4B4B;">Feliz Cumpleaños, mi vida.</h2>
-                <p style="font-size: 18px;">Atte: Justin, el chico más afortunado.</p>
+                <p style="font-size: 22px; color: #333; line-height: 1.5;">Gracias por hacerme el chico más feliz del mundo todos los días. Eres mi persona favorita, mi refugio y la chica más increíble que pude haber conocido. Prometo cuidarte, hacerte reír y amarte cada día un poquito más. ¡Que tengas el cumpleaños más hermoso del universo!</p>
+                <h2 style="color: #FF4B4B; margin-top: 20px;">Feliz Cumpleaños, mi vida.</h2>
+                <p style="font-size: 18px; font-style: italic;">Atte: Justin, el chico que se muere por ti.</p>
             </div>
         """, unsafe_allow_html=True)
         st.toast('¡Eres la mejor! 🎉', icon='😍')
