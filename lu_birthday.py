@@ -181,14 +181,13 @@ with tab3:
     """, unsafe_allow_html=True)
 
 
-# --- SECCIÓN DE RELLENO BONITA (Reemplaza el espacio en blanco) ---
-st.markdown("""
-    <div style="background-color: rgba(255, 255, 255, 0.6); padding: 20px; border-radius: 20px; text-align: center; margin: 30px 0px 20px 0px; box-shadow: 0 4px 15px rgba(255,105,180,0.2);">
-        <img src="https://media.tenor.com/ef30B6bU-HMAAAAi/bubu-dudu.gif" width="120" style="margin-bottom: 10px; border-radius: 10px;">
-        <h2 style="color: #FF4B4B; font-family: 'Brush Script MT', cursive; font-size: 38px; margin: 0; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">Cada instante a tu lado es magia pura ✨</h2>
-        <p style="color: #444; font-size: 18px; margin-top: 5px; font-weight: bold;">Y este es solo el comienzo de nuestra historia...</p>
-    </div>
-""", unsafe_allow_html=True)
+# --- IMAGEN DE RELLENO (GRANDE Y BONITA) ---
+# Esta imagen llenará el espacio vacío.
+st.write("")
+st.write("")
+st.image("https://images.unsplash.com/photo-1494972308805-463bc619d34e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80", use_container_width=True, caption="✨ El mundo es más hermoso contigo ✨")
+st.write("")
+st.write("")
 
 
 # --- EL GRAN FINAL ---
