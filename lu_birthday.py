@@ -1,6 +1,7 @@
 import streamlit as st
 import time
 import os
+import base64
 
 # --- CONFIGURACIÓN DE PÁGINA ---
 st.set_page_config(
@@ -9,6 +10,15 @@ st.set_page_config(
     layout="wide", 
     initial_sidebar_state="collapsed"
 )
+
+# --- FUNCIÓN PARA CARGAR IMÁGENES LOCALES EN HTML ---
+def cargar_imagen_local(ruta):
+    if os.path.exists(ruta):
+        with open(ruta, "rb") as image_file:
+            encoded_string = base64.b64encode(image_file.read()).decode()
+        return f"data:image/jpeg;base64,{encoded_string}"
+    # Si no encuentra tu foto, pondrá un cuadro gris con un mensaje
+    return "https://via.placeholder.com/300x400.png?text=Falta+" + ruta
 
 # --- ESTILOS CSS PERSONALIZADOS ---
 st.markdown("""
@@ -84,7 +94,8 @@ st.markdown("""
 
 # --- MÚSICA DE FONDO ---
 music_file = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" 
-# if os.path.exists("cancion.mp3"): music_file = "cancion.mp3"
+if os.path.exists("cancion.mp3"): 
+    music_file = "cancion.mp3"
 
 st.audio(music_file, format='audio/mp3', start_time=0)
 st.caption("🎵 Dale play para un poco de ambiente romántico 🎵")
@@ -118,20 +129,17 @@ with tab1:
 with tab2:
     st.markdown('<div class="card-box"><p>Pequeños instantes de una gran historia de amor.</p></div>', unsafe_allow_html=True)
     
-    foto_path_1 = "https://via.placeholder.com/300x400.png?text=Nuestra+Primera+Foto" 
-    foto_path_2 = "https://via.placeholder.com/300x400.png?text=Ese+Viaje+Increible" 
-    foto_path_3 = "https://via.placeholder.com/300x400.png?text=Simplemente+Nosotros" 
-
-    if os.path.exists("foto1.jpg"): foto_path_1 = "foto1.jpg"
-    if os.path.exists("foto2.jpg"): foto_path_2 = "foto2.jpg"
-    if os.path.exists("foto3.jpg"): foto_path_3 = "foto3.jpg"
+    # Aquí es donde se procesan las fotos locales usando la nueva función
+    foto_1 = cargar_imagen_local("foto1.jpg")
+    foto_2 = cargar_imagen_local("foto2.jpg")
+    foto_3 = cargar_imagen_local("foto3.jpg")
 
     col_p1, col_p2, col_p3 = st.columns(3)
     
     with col_p1:
         st.markdown(f"""
             <div class="polaroid">
-                <img src="{foto_path_1}" style="width:100%">
+                <img src="{foto_1}" style="width:100%; height:auto; aspect-ratio: 3/4; object-fit: cover;">
                 <div class="caption_pol">El comienzo de todo ❤️</div>
             </div>
         """, unsafe_allow_html=True)
@@ -139,7 +147,7 @@ with tab2:
     with col_p2:
         st.markdown(f"""
             <div class="polaroid">
-                <img src="{foto_path_2}" style="width:100%; transform: rotate(3deg);">
+                <img src="{foto_2}" style="width:100%; height:auto; aspect-ratio: 3/4; object-fit: cover; transform: rotate(3deg);">
                 <div class="caption_pol">Momentos inolvidables ✨</div>
             </div>
         """, unsafe_allow_html=True)
@@ -147,7 +155,7 @@ with tab2:
     with col_p3:
         st.markdown(f"""
             <div class="polaroid">
-                <img src="{foto_path_3}" style="width:100%">
+                <img src="{foto_3}" style="width:100%; height:auto; aspect-ratio: 3/4; object-fit: cover;">
                 <div class="caption_pol">Mi vista favorita 😍</div>
             </div>
         """, unsafe_allow_html=True)
